@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ID Card Generator</title>
+    <link rel="stylesheet" href="index.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&family=Orbitron:wght@700&display=swap" rel="stylesheet">
+    <script type="importmap">
+      {
+        "imports": {
+          "@google/genai": "https://esm.sh/@google/genai@^0.7.0"
+        }
+      }
+    </script>
+    <script type="module" src="index.tsx" defer></script>
+<link rel="stylesheet" href="/index.css">
+</head>
+<body>
+    <main class="app-container">
+        <section class="controls-panel">
+            <h1>ID Card Generator</h1>
+            <p>Fill in the details below to customize your ID card.</p>
+            <form id="id-form" onsubmit="return false;">
+                <label for="input-state">State</label>
+                <input type="text" id="input-state" data-target="card-state-text" value="Alaska">
+                
+                <label for="input-photo">Portrait Photo</label>
+                <input type="file" id="input-photo" accept="image/*">
+
+                <label for="input-dl">License Number (DL)</label>
+                <input type="text" id="input-dl" data-target="card-dl" value="11236558" maxlength="8">
+
+                <label for="input-exp">Expiration Date (EXP)</label>
+                <input type="text" id="input-exp" data-target="card-exp" value="08/12/2028" placeholder="MM/DD/YYYY">
+                
+                <label for="input-ln">Last Name (LN)</label>
+                <input type="text" id="input-ln" data-target="card-ln" value="KUNZE">
+
+                <label for="input-fn">First Name (FN)</label>
+                <input type="text" id="input-fn" data-target="card-fn" value="ASTRID">
+
+                <label for="input-address1">Address Line 1</label>
+                <input type="text" id="input-address1" data-target="card-address1" value="546 KENNY WREN RD">
+                
+                <label for="input-address2">Address Line 2</label>
+                <input type="text" id="input-address2" data-target="card-address2" value="DILLINGHAM, AK, 99576">
+
+                <label for="input-dob">Date of Birth (DOB)</label>
+                <input type="text" id="input-dob" data-target="card-dob" value="10/19/1990" placeholder="MM/DD/YYYY">
+
+                <label for="input-sex">Sex</label>
+                <input type="text" id="input-sex" data-target="card-sex" value="F" maxlength="1">
+
+                <label for="input-hgt">Height (HGT)</label>
+                <input type="text" id="input-hgt" data-target="card-hgt" value="5'-05&quot;">
+
+                <label for="input-wgt">Weight (WGT)</label>
+                <input type="text" id="input-wgt" data-target="card-wgt" value="125 lb">
+
+                <label for="input-hair">Hair Color</label>
+                <input type="text" id="input-hair" data-target="card-hair" value="BRN">
+
+                <label for="input-eyes">Eye Color</label>
+                <input type="text" id="input-eyes" data-target="card-eyes" value="BRN">
+
+                <label for="input-iss">Issue Date (ISS)</label>
+                <input type="text" id="input-iss" data-target="card-iss" value="10/19/2021" placeholder="MM/DD/YYYY">
+
+                <label for="input-signature">Signature</label>
+                <input type="text" id="input-signature" data-target="card-signature" value="Astrid">
+            </form>
+            <button id="download-btn" class="download-button">Download ID Card</button>
+        </section>
+
+        <section class="card-preview-panel">
+            <div id="card-container">
+                <!-- BACKGROUND IMAGES - CRITICAL FOR DOWNLOAD -->
+                <img id="bg-state" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTIwIj48cGF0aCBmaWxsPSIjYWRkOGU2IiBmaWxsLW9wYWNpdHk9IjAuMiIgZD0iTTc3LjQgMTIuN2wtMi41LS41Yy0xLjgtLjQtMy42LS42LTUuNC0uN3MtMy43IDAtNS41LjVsLTEuNi44LTEuNC4xLTEuOS0uOWMtMS4xLS41LTIuMy0uNy0zLjUtLjlzLTIuNS0uMS0zLjcuM2wtMi4xLjctMi4yLjEtMS44LS45Yy0xLS41LTIuMS0uOC0zLjItMS0xLjEtLjItMi4zLS4xLTMuNC4zcy0yLjIuOC0zLjEgMS41Yy0uOS43LTEuOCAxLjYtMi41IDIuNy0uNyAxLjEtMS4yIDIuMy0xLjYgMy42cy0uNiAyLjYtLjUgMy45bC4zIDIuNC42IDIuNS44IDIgMS43IDIuNCAxLjUgMi4yIDEuMSAyLjgtLjEgMy0xIDMuMy0xLjMgMS4zLTMuOC0uMi0yLjktMS44LTMuMi0xLjMtMS40LTQuNC0xLjctMi42LTEuMy0xLjktNS4yIDEuMy0yLjEtMS4yLTQuNC0zLjMtMi44LTEuNy01LjEtNC40LTEuOC0yLjYtMy4zLTQuNy0xLjYtMi4xLTIuOC0zLjgtMS4zLTEuNy0yLjItMy4yLTEtMS40LTEuNS0yLjgtLjUtMS40LS44LTIuNy0uMy0xLjQtLjMtMi43LS4xLTEuMy4yLTIuNWwuMy0xLjYuOS0yLjQgMS4xLTEuOSAyLTEuNCAxLjgtNC43IDEuMS0yLjktLjQtMi4xLTEuOS0zLjQtMS41LTEuMi00LjItMS4zLTQuNCAxLjEtMy41IDIuNi0yLjUgMS45LTQtMy42LTEuNS0xLjgtMi45LTMuNC0xLjQtMS42LTIuNy0zLTEuMy0xLjQtMi4zLTIuNi0xLjEtMS4xLTEuOS0yLjEtLjgtMS0xLjQtMS44LS42LS44LS45LTEuNS0uMy0uNy0uNC0xLjMgMC0xLjMuMy0yLjQuNy0xLjEgMS4zLTEuOSAyLTEuNSAzLjEtMi42IDQuMS0zLjUgMS0uOSAxLjktMS42IDIuOC0yLjIgMS0uNiAxLjgtMS4xIDIuNy0xLjYgMS0uNSAxLjgtLjggMi43LTEuMiAxLS40IDEuOC0uNiAyLjctLjhoMi41bC41LS4xIDEuOS0uNmMyLjYtLjkgNS4zLTEuMyA4LTEuMyAyLjYgMCA1LjIgMS4xIDcuMiAzLjEgMiAyIDEuOSAzLjYgMS44IDUuN2wtLjIgMy41LS41IDQtLjggMy44LTEuMyAzLjYtMS42IDMuMy0yIDMtMi4zIDIuNS0yLjcgMi4zLTIuOSAyLTEuMy0xLjktMi4xLTIuMi0yLjQtMi4xLTEuNC0yLjkgMS4zLTIuNSAyLjQtMi4zIDMtMi4yIDMuNC0yIDMuNy0xLjggMy45LTEuNSA0LTEuMyA0LTEuMSA0LS45IDQtLjggMy45LS43IDMuOC0uNiAzLjctLjUgMy42LS40IDMuNC0uMyAzLjMtLjMgMy4yLS4yIDMtLjIgMi45LS4xIDIuOC0uMSAyLjYgMCAyLjUgMCAyLjQgMSA0LjggMS45IDcuMiAyLjcgMiAxLjQgMy45IDIuNSA1LjggMy40IDEuOS45IDMuOCAxLjcgNS42IDIuNCDEuOC43IDMuNiAxLjQgNS4zIDEuOSAxLjcuNSAzLjMgMS4xIDUgMS41IDEuNi40IDMuMi44IDQuOCAxLjEgMS41LjMgMyAuNiA0LjQuOCAxLjQuMyAyLjguNCA0LjIuNSAyLjggMCA1LjYtMS4xIDcuNi0zLjIgMi0yIDEuOS0zLjUgMS44LTUuN2wtLjEtMi45LS40LTIuOS0uNi0yLjktMS0yLjktMS4zLTIuOC0xLjYtMi43LTIuMS0yLjUtMi4yLTIuMy0yLjYtMi0yLjktMS44LTMuMS0xLjQtMi4zLS44LTIuMi0xLjEtMS43LTQuNC0uNi0zLjYtMS45LTQtMS4zLTEuNS0zLjUtMy43LTEuOC0zLTEuMS0yLjctMS44LTIuMS0yLjMtMS41LTQuNC4zLTIuMSAxLjQtMi42IDIuNC0yLjQgMS0xLjIgMS43LTIuMSAyLjMtMi45LjctLjggMS4yLTEuNSAxLjctMi4xbC4zLS41LjEtMS42LS41LTIuM3oiPjwvcGF0aD48L3N2Zz4=" class="card-bg-layer" />
+                <img id="bg-prospector" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyMDAgMTUwIj48cGF0aCBkPSJtMTM2IDM4Yy0xLjIgMC0yLjQuMi0zLjUgMS0xLjcgMS4yLTMgMy00IDQtMS4yIDEuNC0xLjIgMi43LTEuMiA0LjEgMCAxLjUuMyAzIDEgNC4zcy0xLjQgMy4zLTMuNiA0LjNjLTIuMiAxLTQgMS4yLTQuMi42IDAgMCAuOS0uOS45LTEgMC0xLjMtMS0yLjYtMi4zLTMuNi0yLjYtMi00LjctMS42LTcuMy0xLjZzLTU .My0uMy03LjQgMS4yYy0xLjMuOC0yLjQgMi4zLTMuMyAzLjgtLjkgMS41LTEuNCAzLjItMS43IDQuOWwtMS40IDQuOGMtLjMgMS40LS4yIDIuOS4zIDQuMy41IDEuNCAxLjMgMi44IDIuNiA0IDEuMyAxLjEgMi44IDEuOSA0LjYgMi4zIDMuNy44IDcuMy0uMSA5LjktMi4xIDEuMy0xIDEuOS0yLjQgMi4zLTMuOC40LTEuNC40LTIuOS4zLTQuMy0uMy0yLjgtLjktNS41LTEuOS04bC0uOS0yLjljLS4xLS40LS4xLS43IDAtMSAuMS0uMy40LS41LjgtLjcgMS42LS44IDMuMy0xLjUgNC45LTIuMyAxLjYtLjggMy4yLTEuMyA0LjgtMS44czMuMi0uOCA0LjgtMS4xYzEuNi0uMyAzLjItLjUgNC44LS41IDEuNiAwIDMuMi4xIDQuNy40czMgLjYgNC4zIDEuMmMxLjQuNiAyLjcgMS40IDQgMi43cy0xLjIgMy42LS43IDUuOWMyLjcgMTMuOCAzLjUgMjYuNiAyLjYgMzguMi0uNyA4LjYtMi40IDE2LjYtNS40IDI0LTEuNSAzLjYtMy40IDctNS42IDEwLjItMi4yIDMuMi00LjYgNi4xLTcuNSA4LjctMi44IDIuNi02IDQuOC05LjYgNi40LTMuNSAxLjYtNy4zIDIuNy0xMS4zIDMuMi04LjQgMS0xNi45LS42LTI0LjktNC41LTEuOC0uOS0zLjYtMi4xLTUuMy0zLjQtMy40LTIuNi02LjYtNS42LTkuMy05LjItMS40LTIuMS0yLjYtNC4zLTMuNy02LjctMS0xLjctMS44LTMuMy0yLjctNC44cy0xLjYtMy0yLjUtNC4zYy0xLTEuNC0yLjEtMi42LTMuMy0zLjgtMi4zLTIuMy00LjktNC4yLTcuOC01LjctMi45LTEuNS02LTIuNy05LjItMy40LTkuMi0yLjEtMTguMy0uOS0yNi41IDIuOC00LjEgMS44LTggNC0xMS4zIDYuOC0zLjMgMi44LTYgNi04LjIgOS43LTEuMSAxLjgtMi4xIDMuNi0zIDUuNS0xLjggMy44LTMuMSA3LjktMy45IDEyLjItLjMgMS44LS40IDMuNi0uNCA1LjUgMCAuOS4xIDEuOC4zIDIuNmwuMy44di4xIiBmaWxsPSJub25lIiBzdHJva2U9IiNjY2MiIHN0cm9rZS13aWR0aD0iMS41IiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiLz48cGF0aCBkPSJtNTQgMTE4YzAgMCAxMCAxNSA1IDE5IDEgLjgtNCAxMy00IDEzcy0zIDYtMyA2Yy0xIDAtMTcgMy0yMCAwbC0xNy0yMWMtMy04IDUtNSA1LTUgNi0yIDEyLTIuNSA0LjUtOS41LTEgMSA1IDYgNi41IDUuNSAyLjQtLjggNC45LTEuMyA3LjMtMS44IDMuNy0uOCA3LjUtMS4yIDExLjQtMS4yczcuOC4zIDExLjUgMS4xYzMuNy44IDcuNCAxLjggMTAuOCAzLjEgMy40IDEuMyA2LjYgMyAxOS40IDIuMyAxMi44LS43IDE1LjEtMTAuMyAyMi4zLTE5LjcgMS40LTEuOCAyLjUtMy44IDMuNC02IC44LTIuMiAxLjQtNC42IDEuNi03IC4yLTIuNC0uMS00LjktLjgtNy4zLTEuNC00LjYtNC4xLTguNS03LjktMTEuNi0yLjktMi40LTYuMi00LjgtOS44LTYuMi03LjUtMy4yLTE1LjktNC4zLTI0LjQtMi45LTIuMS4zLTQuMS44LTYuMSAxLjVsLTEuNC41IiBmaWxsPSJub25lIiBzdHJva2U9IiNjY2MiIHN0cm9rZS13aWR0aD0iMS41IiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiLz48L3N2Zz4=" class="card-bg-layer" />
+                <img id="bg-poppies" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyMDAgODAiPjxwYXRoIGQ9Im00NSA3NGMtNCAwLTYtNC02LTRzLTEtMy0xLTVjMC0yIDAtMyAyLTVzNC0zIDQtMyAzIDIgMyA0YzAgMi0zIDUtNSA1IiBmaWxsPSJub25lIiBzdHJva2U9IiNjY2MiIHN0cm9rZS13aWR0aD0iMS4yIi8+PHBhdGggZD0iTTQyIDY1YzIgMCA0LTIgNC0ycy0xLTYtMS05YzAtMyAwLTQgMi02czQtMyA0LTNjMyAyIDUgMyA4IDIgMy0xIDYtMyA2LTZzMC01LTItNmwtNy0xMWMtMS0yLTEtNS0xLTcgMC0zIDAtNCAyLTdzNC0zIDQtMyIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjY2NjIiBzdHJva2Utd2lkdGg9IjEuMiIvPjxwYXRoIGQ9Im0yNyA3NGMtNCAwLTYtNC02LTRzLTEtMy0xLTVjMC0yIDAtMyAyLTVzNC0zIDQtMyAzIDIgMyA0YzAgMi0zIDUtNSA1IiBmaWxsPSJub25lIiBzdHJva2U9IiNjY2MiIHN0cm9rZS13aWR0aD0iMS4yIi8+PHBhdGggZD0iTTI0IDY1YzIgMCA0LTIgNC0ycy0xLTYtMS05YzAtMyAwLTQgMi02czQtMyA0LTNjMyAyIDUgMyA4IDIgMy0xIDYtMyA2LTZzMC01LTItNmwtNy0xMWMtMS0yLTEtNS0xLTcgMC0zIDAtNCAyLTdzNC0zIDQtMyIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjY2NjIiBzdHJva2Utd2lkdGg9IjEuMiIvPjxwYXRoIGQ9Ik0zMyA1N2MtNCAzLTggMy0xMSAxLTEuNS0xLTEtMy0xLTVzMi0zIDItM2MxLTIgMy0zIDUtMyIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjY2NjIiBzdHJva2Utd2lkdGg9IjEuMiIvPjwvc3ZnPg==" class="card-bg-layer" />
+
+                <div class="card-header">
+                    <img class="header-bear-logo" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgNTAiIGZpbGw9IiNkYzliMDAiPjxwYXRoIGQ9Ik04Mi41IDMyLjFsLTIuNy02LjljMC0uMS0uMS0uMS0uMi0uMWgtNC44Yy0uMSAwLS4yLjEtLjIuMWwtMy41IDguOC0xLjktNS4xYy0uMS0uMS0uMS0uMi0uMy0uMmgtNC40Yy0uMSAwLS4yLjEtLjIgLjJsLTMuNSA4LjggMS45IDUuNGMuMS4yIDAgLjMuMi4zaDQuNWMuMSAwIC4yLS4xLjItLjJsMi4xLTUuNyAyLjggNy4yYy4xLjEgLjIuMi4zLjJoNC41Yy4yIDAgLjMtLjEuMy0uM2wzLjEtNy43ek01Mi41IDI1LjFIMzVjLS4yIDAtLjMuMS0uMy4zaC0uMWMtOS41IDAtMTcuMyA3LjctMTcuMyAxNy4zIDAgOS41IDcuNyAxNy4zIDE3LjMgMTcuM2gxNy41YzkuNSAwIDE3LjMtNy43IDE3LjMtMTcuMyAwLTkuNi03LjgtMTcuMy0xNy4zLTE3LjN6TTMxLjkgNDZjLTMuOSAwLTcuMS0zLjItNy4xLTcuMXMzLjItNy4xIDcuMS03LjEgNy4xIDMuMiA3LjEgNy4xLTMuMSA3LjEtNy4xIDcuMXptNDcuMS0xMS45bC0yLjQtLjctLjYgMi4xYy0uMS4yLS4zLjQtLjUuNGgtMS42Yy0uMiAwLS4zLS4xLS40LS4zbC0uOC0yLjUtMi4yLjYgMS4xIDMuOWMuMS4yLS4xLjQtLjMuNWgtMS42Yy0uMiAwLS4zLS4yLS4zLS40bC0xLjQtNC42Yy0uMS0uMy4xLS41LjQtLjVsMi43LS44Yy4zLS4xLjUtLjEuNi4yem00LjYtNC40bC0uNi0uMmMtLjMtLjEtLjQtLjQtLjQtLjcgMC0uMi4xLS40LjQtLjVsMi4zLS43Yy4zLS4xLjUtLjEuNi4yLjEuMy0uMS41LS40LjZsLTEuNS41ek0xNS45IDE3LjZsNC43IDEuNGMyLjIgNS4xIDcgOC45IDEyLjYgOC45aDE1Yy4xIDAgLjEgMCAuMi0uMWw1LjktMTQuNGM1LjYgMy4yIDEwLjIgOC40IDExLjcgMTQuOWgtNDVjLTEuOS0zLjQtMy4zLTcuMi00LTExLjN6Ii8+PC9zdmc+" alt="Bear Logo">
+                    <span id="card-state-text">Alaska</span>
+                    <span class="document-type">DRIVER LICENSE</span>
+                </div>
+
+                <div class="card-photo-main-container">
+                    <img id="card-photo-main" src="https://assets.codepen.io/167188/default-avatar.png" alt="Main Portrait">
+                </div>
+
+                <div class="card-photo-secondary-container">
+                    <img id="card-photo-secondary" src="https://assets.codepen.io/167188/default-avatar.png" alt="Secondary Portrait">
+                </div>
+
+                <div class="card-details-main">
+                    <div class="detail-field"><span id="card-dl">11236558</span></div>
+                    <div class="detail-field"><span id="card-exp">08/12/2028</span></div>
+                    <div class="detail-field ln-field"><span class="label">LN</span><span id="card-ln">KUNZE</span></div>
+                    <div class="detail-field fn-field"><span class="label">FN</span><span id="card-fn">ASTRID</span></div>
+                    <div class="address-field">
+                       <span id="card-address1">546 KENNY WREN RD</span>
+                       <span id="card-address2">DILLINGHAM, AK, 99576</span>
+                    </div>
+                    <div class="detail-field dob-field"><span class="label">DOB</span><span id="card-dob">10/19/1990</span></div>
+                </div>
+
+                <span id="card-signature">Astrid</span>
+
+                <div class="card-physical-details">
+                    <div class="phys-detail"><span class="label">SEX</span><span id="card-sex">F</span></div>
+                    <div class="phys-detail"><span class="label">HGT</span><span id="card-hgt">5'-05"</span></div>
+                    <div class="phys-detail"><span class="label">WGT</span><span id="card-wgt">125 lb</span></div>
+                    <div class="phys-detail"><span class="label">HAIR</span><span id="card-hair">BRN</span></div>
+                    <div class="phys-detail"><span class="label">EYES</span><span id="card-eyes">BRN</span></div>
+                    <div class="phys-detail"><span class="label">ISS</span><span id="card-iss">10/19/2021</span></div>
+                </div>
+            </div>
+        </section>
+    </main>
+<script type="module" src="/index.tsx"></script>
+</body>
+</html>
